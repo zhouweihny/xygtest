@@ -1,0 +1,28 @@
+{
+    "code": "0000",
+    "message": "",
+    "result": true,
+    "data": {
+        "id": "123",
+        "name": "心痛定",
+        "COD": "105",
+        "AD": "5",
+        "date": "2018-07-16",
+        "img": ["css/img/index.jpg", "css/img/closebtn.png", "css/img/indexs.jpg"],
+        "img1": "css/img/index.jpg",
+        "imgs": [
+            {
+                "path": "css/img/index.jpg",
+                "tit": "有机肥销量"
+            },{
+                "path": "css/img/closebtn.png",
+                "tit": "干粪销量"
+            },{
+                "path": "css/img/indexs.jpg",
+                "tit": "水处理"
+            }
+        ],
+        "text": "这是生化总结，这是生化总结，这是生化总结，这是生化总结。",
+        "am": false
+    }
+}

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>授权管理</title>
+<link rel="stylesheet" href="js/jquery-weui/lib/weui.min.css">
+<link rel="stylesheet" href="js/jquery-weui/css/jquery-weui.min.css">
+<link rel="stylesheet" href="css/font-awesome.css?v=4.4.0">
+<link rel="stylesheet" href="js/mobiscroll/mobiscroll.zcore.css">
+<link rel="stylesheet" href="js/iscroll/4.2.5/pullToRefresh.css">
+<link rel="stylesheet" href="css/wxzui_common.css">
+<style>
+.zui .J_header .J_header_right_icon .fa {
+    font-size: 1rem;
+}
+.zui .weui-cells {
+    overflow-y: auto;
+}
+#J_cards:after {
+    height: 0;
+    border: 0;
+}
+.J_subData {
+    float: none;
+}
+.J_content .weui-label {
+    color: #555;
+    width: 3.5rem;
+}
+.J_router_search_detail .weui-cell_access .weui-cell__ft:after {
+    width: 0;
+    height: 0;
+    border: 0;
+}
+.J_router_search_detail .zcell.weui-cell {
+    display: block;
+}
+.J_router_search_detail .zcell.weui-cell:before {
+    border: 0;
+    height: 0;
+}
+.J_router_search_detail .zcard {
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+    color: rgba(0,0,0,.87);
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+.J_router_search_detail .zcard .z_h {
+    border-bottom: 1px solid #e5e5e5;
+    height: 35px;
+    line-height: 35px;
+    font-size: .7rem;
+}
+.J_router_search_detail .zcard .z_b {
+    font-size: .55rem;
+    margin-top: 10px;
+    margin-bottom: 1px;
+}
+.J_router_search_detail .zcard .weui-flex__item {
+    margin-bottom: 8px;
+    color: #636363;
+}
+.J_router_search_detail .zcard label {
+    margin-right: 6px;
+}
+.J_router_search_detail .J_content {
+    overflow-y: auto;
+}
+</style>
+</head>
+<body class="zui nofooter">
+
+<section class="fn-hide J_router_main">
+    <header class="J_header">
+        <a class="J_header_back" href="index.html"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">授权管理</h1>
+        <a class="J_header_right_icon" href="#/J_router_search"><i class="fa fa-history"></i></a>
+    </header>
+
+    <div class="J_content" id="wrapper">
+        <div class="weui-search-bar" id="searchBar">
+            <form class="weui-search-bar__form" action="javascript:;">
+                <div class="weui-search-bar__box">
+                    <i class="weui-icon-search"></i>
+                    <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+                    <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                </div>
+                <label class="weui-search-bar__label" id="searchText">
+                    <i class="weui-icon-search"></i>
+                    <span>搜索</span>
+                </label>
+            </form>
+            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+        </div>
+        <div class="weui-cells" id="J_cards">
+            
+        </div>
+    </div>
+</section>
+
+<section class="fn-hide J_router_search">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">授权历史</h1>
+    </header>
+
+    <div class="J_content">
+        
+    </div>
+</section>
+
+<section class="fn-hide J_router_search_detail">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">历史列表</h1>
+    </header>
+
+    <div class="J_content" id="wrapperd">
+        <div class="weui-cells ctype">
+            
+        </div>
+    </div>
+</section>
+
+<section class="fn-hide J_router_detail">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">授权页</h1>
+    </header>
+
+    <div class="J_content">
+        
+    </div>
+</section>
+
+<textarea class="fn-hide" id="T_cards">
+{{#each this}}
+<a class="weui-cell weui-cell_access" href="#/J_router_detail?id={{id}}" data-json="{{retJson2Str this}}">
+    <div class="weui-cell__bd">
+        <p>{{name}}</p>
+    </div>
+    <div class="weui-cell__ft"></div>
+</a>
+{{/each}}
+</textarea>
+
+<textarea class="fn-hide" id="T_detail">
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">授权对象：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{name}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">开始日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input value="" class="weui-input J_date J_sdate" readonly="readonly" name="appDate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">结束日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input value="" class="weui-input J_date J_edate" readonly="readonly" name="appDate" type="text">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="J_btnwrap">
+    <a href="javascript:;" class="zbtn J_subData">确定授权</a>
+</div>
+</textarea>
+
+<textarea class="fn-hide" id="T_search">
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">开始日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input value="" class="weui-input J_date J_sdate" readonly="readonly" name="appDate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">结束日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input value="" class="weui-input J_date J_edate" readonly="readonly" name="appDate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">用户名：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <input class="weui-input J_name" type="text" placeholder="请输入用户名">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="J_btnwrap">
+    <a href="javascript:;" class="zbtn J_subData">查询</a>
+</div>
+</textarea>
+
+<textarea class="fn-hide" id="T_search_detail">
+{{#each this}}
+<a class="weui-cell weui-cell_access zcell" href="javascript:;">
+    <div class="weui-cell__bd weui-cell_primary">
+        <div class="zcard">
+            <div class="z_h">
+                {{name}}
+            </div>
+            <div class="z_b">
+                <div class="weui-flex">
+                    <div>
+                        <label>开始日期：</label>
+                    </div>
+                    <div class="weui-flex__item">
+                        <span class="des">{{date}}</span>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div>
+                        <label>结束日期：</label>
+                    </div>
+                    <div class="weui-flex__item">
+                        <span class="des">{{date}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+{{/each}}
+</textarea>
+
+<script src="js/jquery-weui/lib/jquery-2.1.4.js"></script>
+<script src="js/jquery-weui/js/jquery-weui.min.js"></script>
+<script src="js/handlebars.js"></script>
+<script src="js/swiper.js"></script>
+<script src="js/mobiscroll/mobiscroll.zcore.js"></script>
+<script src="js/lrz.all.bundle.js"></script>
+<script src="js/director.min.js"></script>
+<script src="js/iscroll/4.2.5/iscroll.js"></script>
+<script src="js/iscroll/4.2.5/pullToRefresh.js"></script>
+<script src="js/wxzui_common.js"></script>
+<script>
+
+srvMap.add("json", "tableData.json", "");
+
+var endFlag = 0,
+    refreshFlag = 1,
+    page = 1,
+    rows = 10,
+    pagedata = {
+        url: srvMap.get("json"),
+        data: '&page='+page+'&rows='+rows,
+        callback: initzBtns
+    },
+    clickFlag = 0,
+    pageHeight = $(window).height() - $(".J_header").height() - 20,
+    zimgObj = null,
+    zrouter = null,
+    zInterTimer = null,
+    cdate = '',
+    curSection = null,
+    curUserId = '',
+    searchParam = '';
+
+$(function(){
+
+    var routerObj = {
+        '/J_router_detail': {
+            on: function(){
+                curUserId = $.getUrlVar('id') || '';
+                curSection = $(".J_router_detail .J_content");
+                setTimeout(function(){
+                    showDetail();
+                }, 30)
+            },
+            after: function(){
+                curSection.html('');
+                curSection = $(".J_router_main .J_content");
+            }
+        },
+        '/J_router_search': {
+            on: function(){
+                curSection = $(".J_router_search .J_content");
+                setTimeout(function(){
+                    showSearch();
+                }, 30)
+            },
+            after: function(){
+                curSection.html('');
+                curSection = $(".J_router_main .J_content");
+            }
+        },
+        '/J_router_main': {
+            once: function(){
+                setTimeout(function(){
+                    initPage();
+                }, 30)
+            },
+            on: function(){
+                curSection = $(".J_router_main .J_content");
+            }
+        },
+        '/J_router_search_detail': {
+            on: function(){
+                curSection = $(".J_router_search_detail .J_content .weui-cells");
+                setTimeout(function(){
+                    showSearchDetail();
+                }, 30)
+            },
+            once: function(){
+                setTimeout(function(){
+                    showSearchDetailS();
+                }, 30)
+            },
+            after: function(){
+                curSection.html('');
+                curSection = $(".J_router_main .J_content");
+            }
+        }
+    }
+    initZrouter(routerObj, function(router){
+        zrouter = router;
+    });
+})
+
+function initPage(){
+    $("#wrapper").css({"height": pageHeight});
+    $("#J_cards").css({"height": pageHeight-44});
+
+    $("#searchInput").on("input propertychange", function () {
+        var key = $(this).val();
+        console.log(key)
+        
+        var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%]");
+        var result = key.match(pattern);
+        if (result){
+            zuiTotast("不能输入特殊字符", "2");
+            return false;
+        }
+
+        getUserList(key);
+    });
+}
+
+function getUserList(key){
+    if(zInterTimer)
+        clearTimeout(zInterTimer);
+    zInterTimer = setTimeout(function(){
+        createLoading();
+        $("#J_cards").html('');
+        $.PostJson(srvMap.get("json"), "id="+key, function(state, json){
+            if(state == 'success'){
+                if(json && json.code == '0000'){
+
+                    $("#J_cards").temp($("#T_cards").val(), json.data.rows);
+
+                }else{
+                    showResDes(pageHeight, curSection);
+                }
+            }
+            unblockLoading();
+        })
+    }, 300)
+}
+
+function initzBtns(){
+    console.log("initzBtns")
+}
+
+function showDetail(){
+    if(!curUserId){
+        showResDes(pageHeight, curSection);
+        return false;
+    }
+    createLoading();
+    $.PostJson(srvMap.get("json"), "id="+curUserId, function(state, json){
+        if(state == 'success'){
+            if(json && json.code == '0000'){
+                curSection.temp($("#T_detail").val(), json.data.rows[0]);
+
+                initDatePick();
+
+                curSection.find(".J_subData").off("click").on("click", function(){
+                    zuiConfirm("是否确认授权？",function(){
+                        shouquanData();
+                    })
+                })
+            }else{
+                showResDes(pageHeight, curSection);
+            }
+        }
+        unblockLoading();
+    })
+}
+
+function initDatePick(){
+    // 获取当日与当月1号
+    var curDate = new Date(),
+        _sdate = curSection.find(".J_sdate"),
+        _edate = curSection.find(".J_edate"),
+        _sdateMob = null,
+        _edateMob = null,
+        _m = ((curDate.getMonth()+1)<10) ? ("0"+(curDate.getMonth()+1)) : (curDate.getMonth()+1),
+        firstdate = curDate.getFullYear() + "-"+ _m + "-01";
+
+    var opt1 = {
+        dateFormat: "yy-mm-dd",
+        maxDate: curDate,
+        onSelect: function(edate){
+            opt2.minDate = new Date(edate);
+            _edateMob.init(opt2);
+        }
+    };
+    var opt2 = {
+        dateFormat: "yy-mm-dd",
+        minDate: new Date(firstdate),
+        maxDate: new Date('2999-12-31'),
+        onSelect: function(edate){
+            opt1.maxDate = new Date(edate);
+            _sdateMob.init(opt1);
+        }
+    }
+    _sdate.val(firstdate).mobiscroll().date(opt1);
+    _edate.val(getCurDate(curDate)).mobiscroll().date(opt2);
+    _sdateMob = _sdate.mobiscroll('getInst');
+    _edateMob = _edate.mobiscroll('getInst');
+}
+
+function shouquanData(){
+    var _sdateVal = curSection.find(".J_sdate").val(),
+        _edateVal = curSection.find(".J_edate").val();
+    if(!curUserId){
+        zuiTotast("数据错误", '2');
+        return false;
+    }
+    createLoading();
+    $.PostJson(srvMap.get("json"), "userid="+curUserId+"&sdate="+_sdateVal+"&edate="+_edateVal, function(state, json){
+        if(state == 'success'){
+            if(json && json.code == '0000'){
+                zuiTotast(json.message || "授权成功");
+                window.history.back();
+            }else{
+                zuiTotast(json.message || "授权失败", '2');
+            }
+        }
+        unblockLoading();
+    })
+}
+
+function showSearch(){
+    curSection.html($("#T_search").val());
+
+    initDatePick();
+
+    curSection.find(".J_subData").off("click").on("click", function(){
+        var _sdateVal = curSection.find(".J_sdate").val(),
+            _edateVal = curSection.find(".J_edate").val(),
+            _nameVal = curSection.find(".J_name").val();
+
+        searchParam = "name="+_nameVal+"&sdate="+_sdateVal+"&edate="+_edateVal;
+        zrouter.setRoute('J_router_search_detail');
+    })
+}
+
+function showSearchDetailS(){
+    $("#wrapperd").css({"height": pageHeight});
+
+    refresher.init({
+        id: "wrapperd",
+        li: "weui-cells",
+        pullDownAction: Refresh,
+        pullUpAction: Load
+    });
+}
+function showSearchDetail(){
+    getZdatas();
+}
+
+function Refresh() {
+    page = 1;
+    endFlag = 0;
+    refreshFlag = 1;
+    $(".pullUp").css({"display": "block"});
+    $(".pullUp .pullUpLabel").html("上拉加载更多...");
+    getZdatas();
+}
+
+function Load() {
+    if(endFlag){
+        wrapperd.refresh();
+        $(".pullUp .pullUpLabel").html("没有更多数据了...");
+        return false;
+    }
+    page++;
+    getZdatas();
+}
+
+function getZdatas(){
+    createLoading();
+    removeResDes();
+
+    var _data = searchParam+'&page='+page+'&rows='+rows;
+
+    $.PostJson(srvMap.get("json"), _data, function(state, json){
+        if(state == 'success'){
+            if(json && json.code == '0000'){
+                if(refreshFlag){
+                    curSection.html("");
+                    wrapperd.refresh();
+                    curSection.temp($("#T_search_detail").val(), json.data.rows);
+                }else{
+                    curSection.tempAppend($("#T_search_detail").val(), json.data.rows);
+                }
+
+                refreshFlag = 0;
+                if(json.data.rows.length){
+                    if(curSection.find(".zcell").length >= json.data.total){
+                        endFlag = 1;
+                        setTimeout(function(){
+                            if($("#wrapperd .scroller").height() > pageHeight)
+                                $(".pullUp .pullUpLabel").html("没有更多数据了...").show();
+                            else
+                                $(".pullUp .pullUpLabel").html("没有更多数据了...").hide();
+                        }, 100);
+                    }else{
+                        $(".pullUp .pullUpLabel").html("上拉加载更多...").show();
+                    }
+                }else{
+                    endFlag = 1;
+                    if(curSection.find(".zcell").length){
+                        $(".pullUp .pullUpLabel").html("没有更多数据了...").show();
+                        wrapperd.refresh();
+                    }else{
+                        $(".pullUp .pullUpLabel").html("没有更多数据了...").hide();
+                        showResDes(pageHeight, curSection);
+                    }
+                }
+
+            }else{
+                zuiAlert(json.message||"暂无药店药品列表");
+                $(".pullUp .pullUpLabel").hide();
+                showResDes(pageHeight, curSection);
+            }
+        }
+        wrapperd.refresh();
+        unblockLoading();
+    })
+}
+
+</script>
+</body>
+</html>

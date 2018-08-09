@@ -1,0 +1,102 @@
+{
+    "code": "0000",
+    "message": "",
+    "result": true,
+    "data":{
+        "total": 80,
+        "totalPages": 0,
+        "pageSize": 10,
+        "currentPage": 1,
+        "hasPrevious": false,
+        "hasNext": false,
+        "rows": [
+            {
+                "goodsnumber": "21280",
+                "goodsname": "酚磺乙胺注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "扬州中宝",
+                "funit": "盒",
+                "qty": "300",
+                "fbatchno": "3001Mar 14- 2018 3:23-0002",
+                "fbatchnumber": "218030501",
+                "storagename": "汇仁医药贸易快批部",
+                "fdisdate": "2020-02-29",
+                "suppliername": "扬州中宝药业股份有限公司(原扬州中宝制药有限公司)",
+                "purprice": "8"
+            },
+            {
+                "fnumber": "21239",
+                "goodsname": "醋酸泼尼松龙注射液",
+                "fmodel": "1瓶*0.125g:5ml/25盒/450箱",
+                "fprodplace": "浙江仙琚制药股份有限公司",
+                "fbatchnumber": "180404",
+                "qty": "4,500"
+            },
+            {
+                "fnumber": "21281",
+                "goodsname": "浓氯化钠注射液",
+                "fmodel": "1盒*1g:10ml*5支/180箱",
+                "fprodplace": "扬州中宝",
+                "fbatchnumber": "318052401",
+                "qty": "5,400"
+            },
+            {
+                "fnumber": "70903",
+                "goodsname": "碘海醇注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "通用电气药业(上海)",
+                "fbatchnumber": "14187195",
+                "qty": "240"
+            },
+            {
+                "fnumber": "21280",
+                "goodsname": "酚磺乙胺注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "扬州中宝",
+                "fbatchnumber": "218030501",
+                "qty": "300"
+            },
+            {
+                "fnumber": "21280",
+                "goodsname": "酚磺乙胺注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "扬州中宝",
+                "fbatchnumber": "218030501",
+                "qty": "300"
+            },
+            {
+                "fnumber": "21280",
+                "goodsname": "酚磺乙胺注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "扬州中宝",
+                "fbatchnumber": "218030501",
+                "qty": "300"
+            },
+            {
+                "fnumber": "21280",
+                "goodsname": "酚磺乙胺注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "扬州中宝",
+                "fbatchnumber": "218030501",
+                "qty": "300"
+            },
+            {
+                "fnumber": "21280",
+                "goodsname": "酚磺乙胺注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "扬州中宝",
+                "fbatchnumber": "218030501",
+                "qty": "300"
+            },
+            {
+                "fnumber": "21280",
+                "goodsname": "酚磺乙胺注射液",
+                "fmodel": "1盒*0.5g:2ml*10支/300箱",
+                "fprodplace": "扬州中宝",
+                "fbatchnumber": "218030501",
+                "qty": "300"
+            }
+        ],
+        "page": true
+    }
+}

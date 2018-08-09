@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>系统出水指标</title>
+<link rel="stylesheet" href="js/jquery-weui/lib/weui.min.css">
+<link rel="stylesheet" href="js/jquery-weui/css/jquery-weui.min.css">
+<link rel="stylesheet" href="css/font-awesome.css?v=4.4.0">
+<link rel="stylesheet" href="js/mobiscroll/mobiscroll.zcore.css">
+<link rel="stylesheet" href="js/iscroll/4.2.5/pullToRefresh.css">
+<link rel="stylesheet" href="css/wxzui_common.css">
+<style>
+
+</style>
+</head>
+<body class="zui nofooter">
+
+<section class="fn-hide J_router_main">
+    <header class="J_header">
+        <a class="J_header_back" href="index.html"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">系统出水指标</h1>
+        <a class="J_header_right_icon" href="#/J_router_add">新增</a>
+    </header>
+
+    <div class="J_content" id="wrapper">
+        <div class="weui-cells" id="J_cards">
+            
+        </div>
+    </div>
+</section>
+
+<section class="fn-hide J_router_add">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">新增</h1>
+    </header>
+
+    <div class="J_content">
+        
+    </div>
+
+    <div class="J_foot">
+        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" id="J_subData">提交</a>
+    </div>
+</section>
+
+<section class="fn-hide J_router_detail">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">详情</h1>
+    </header>
+
+    <div class="J_content">
+        
+    </div>
+</section>
+
+<textarea class="fn-hide" id="T_cards">
+{{#each this}}
+<a class="weui-cell weui-cell_access zcell" href="#/J_router_detail?id={{id}}" data-json="{{retJson2Str this}}">
+    <div class="weui-cell__bd weui-cell_primary">
+        <p>{{name}}</p>
+    </div>
+    <span class="weui-cell__ft"></span>
+</a>
+{{/each}}
+</textarea>
+
+<textarea class="fn-hide" id="T_detail">
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">COD(mg/l)：</label>
+            <p class="tips">定额：200</p>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{COD}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">氨氮(mg/l)：</label>
+            <p class="tips">定额：80</p>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{AD}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">执行日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{date}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <ul class="J_imgList fn-clear" id="J_imgList">
+                {{#each img}}
+                <li>
+                    <img src="{{this}}" class="J_pswpImg">
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
+</textarea>
+
+<textarea class="fn-hide" id="T_add">
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">COD(mg/l)：</label>
+            <p class="tips">定额：200</p>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input J_COD" type="text" placeholder="请输入COD(mg/l)">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">氨氮(mg/l)：</label>
+            <p class="tips">定额：80</p>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input J_AD" type="text" placeholder="请输入氨氮(mg/l)">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">执行日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input value="" class="weui-input" readonly="readonly" name="appDate" id="J_date" type="text">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">现场图片：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_plain-primary" id="J_takePhoto">
+                <i class="fa fa-photo" aria-hidden="true"></i>
+                拍照
+            </a>
+            <input type="file" id="msg-image" class="_file" accept="image/*">
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <ul class="J_imgList fn-clear" id="J_imgList">
+                
+            </ul>
+        </div>
+    </div>
+</div>
+</textarea>
+
+<script src="js/jquery-weui/lib/jquery-2.1.4.js"></script>
+<script src="js/jquery-weui/js/jquery-weui.min.js"></script>
+<script src="js/handlebars.js"></script>
+<script src="js/swiper.js"></script>
+<script src="js/mobiscroll/mobiscroll.zcore.js"></script>
+<script src="js/lrz.all.bundle.js"></script>
+<script src="js/director.min.js"></script>
+<script src="js/iscroll/4.2.5/iscroll.js"></script>
+<script src="js/iscroll/4.2.5/pullToRefresh.js"></script>
+<script src="js/wxzui_common.js"></script>
+<script>
+
+srvMap.add("json", "tableData.json", "");
+
+var endFlag = 0,
+    refreshFlag = 1,
+    page = 1,
+    rows = 10,
+    pagedata = {
+        url: srvMap.get("json"),
+        data: '&page='+page+'&rows='+rows,
+        callback: initzBtns
+    },
+    clickFlag = 0,
+    pageHeight = $(window).height() - 65,
+    zimgObj = null,
+    zrouter = null;
+
+$(function(){
+
+    var routerObj = {
+        '/J_router_detail': {
+            on: function(){
+                if(zimgObj)
+                    zimgObj.close();
+                var id = $.getUrlVar('id');
+                setTimeout(function(){
+                    showDetail(id);
+                }, 30)
+            },
+            after: function(){
+                $(".J_router_detail .J_content").html('');
+                removeResDes();
+            }
+        },
+        '/J_router_add': {
+            on: function(){
+                setTimeout(function(){
+                    showAdd();
+                }, 30)
+            }
+        },
+        '/J_router_main': {
+            once: function(){
+                setTimeout(function(){
+                    initPage();
+                }, 30)
+            },
+            on: function(){
+                if(zimgObj)
+                    zimgObj.close();
+            }
+        }
+    }
+    initZrouter(routerObj, function(router){
+        zrouter = router;
+    });
+})
+
+function initPage(){
+    $("#wrapper").css({"height": pageHeight});
+    refresher.init({
+        id: "wrapper",
+        li: "weui-cells",
+        pullDownAction: Refresh,
+        pullUpAction: Load
+    });
+
+    getAjaxDataIscrollCommon(pagedata);
+}
+
+function Refresh() {
+    page = 1;
+    endFlag = 0;
+    refreshFlag = 1;
+    $(".pullUp").css({"display": "block"});
+    $(".pullUp .pullUpLabel").html("上拉加载更多...");
+    getAjaxDataIscrollCommon(pagedata);
+}
+
+function Load() {
+    if(endFlag){
+        wrapper.refresh();
+        $(".pullUp .pullUpLabel").html("没有更多数据了...");
+        return false;
+    }
+    page++;
+    getAjaxDataIscrollCommon(pagedata);
+}
+
+function initzBtns(){
+    console.log("initzBtns")
+}
+
+function showDetail(id){
+    if(!id){
+        showResDes(pageHeight, $(".J_router_detail .J_content"));
+        return false;
+    }
+    createLoading();
+    $.PostJson(srvMap.get("json"), "id="+id, function(state, json){
+        if(state == 'success'){
+            if(json && json.code == '0000'){
+                $(".J_router_detail .J_content").temp($("#T_detail").val(), json.data.rows[0]);
+                $(".J_router_detail .J_header-title").text(json.data.rows[0].name);
+
+                initImgShow();
+            }else{
+                showResDes(pageHeight, $(".J_router_detail .J_content"));
+            }
+        }
+        unblockLoading();
+    })
+}
+
+function showAdd(){
+    $(".J_router_add .J_content").html($("#T_add").val());
+
+    //图片上传
+    $("#msg-image").on("change", function(){
+        imgUploadF(this);
+    })
+
+    var cdate = new Date();
+    $("#J_date").mobiscroll().datetime({
+        dateFormat: "yy-mm-dd",
+        maxDate: cdate,
+        minDate: new Date('2001-01-01'),
+        showNow: true,
+        nowText: "现在"
+    });
+    $("#J_date").scroller('setDate', cdate, true);
+
+    $("#J_subData").on("click", function(){
+        subData();
+    })
+}
+
+function imgUploadF(obj){
+    var file = obj.files[0];
+    //判断类型是不是图片
+    if(!(/image\/\w+/.test(file.type))){
+        zuiTotast("请确保文件为图像类型");
+        return false;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    createLoading("正在上传...");
+    reader.onload = function(e){
+        //todo 以base64的方式上传到服务器
+        lrz(file, { quality:0.7}).then(function (rst) {
+
+            var _str = '<li><img src="'+rst.base64+'" class="J_pswpImg"><a href="javascript:;" class="J_delImg"><i></i></a></li>';
+            $("#J_imgList").append(_str);
+
+            initImgShow();
+
+            $("#msg-image").replaceWith('<input type="file" id="msg-image" class="_file" accept="image/*">');
+            $("#msg-image").on("change", function(){
+                imgUploadF(this);
+            });
+
+        })
+        .catch(function (err) {
+            // 处理失败会执行
+            console.log(err)
+            zuiTotast("上传失败", '3');     
+        })
+        .always(function () {
+            // 不管是成功失败，都会执行
+            unblockLoading();
+        }); 
+    }
+}
+
+function initImgShow(){
+    var _pswpImg = $(".J_pswpImg").not(".fn-hide");
+    _pswpImg.off("click").on("click", function(){
+        var _index = _pswpImg.index($(this)),
+            zimgArr = [];
+        _pswpImg.each(function(){
+            var _this = $(this),
+                attr = {};
+            attr.image = _this.attr("src"),
+            attr.caption = _this.attr("title");
+            zimgArr.push(attr);
+        })
+        // zrouter.setRoute("J_router_imgshow?index="+_index);
+
+        zimgObj = $.photoBrowser({
+            items: zimgArr,
+            initIndex: _index,
+            onClose: function(){
+                
+            }
+        });
+        zimgObj.open();
+    })
+
+    $(".J_delImg").off("click").on("click", function(){
+        delImg($(this));
+    })
+}
+
+function delImg(obj){
+    zuiConfirm("确定删除？", function(){
+        var _li = obj.parent();
+        _li.remove();
+    })
+}
+
+function subData(){
+    var data = '',
+        _J_COD = $(".J_COD"),
+        _J_AD = $(".J_AD"),
+        COD = _J_COD.val(),
+        AD = _J_AD.val(),
+        date = $(".J_date").val();
+
+    var arr = [],
+        _J_pswpImg = $(".J_pswpImg");
+    _J_pswpImg.each(function(){
+        var _src = $(this).attr("src");
+        arr.push(_src);
+    })
+
+    if(!COD){
+        zuiTotast("请输入COD", "2", function(){
+            _J_COD.focus();
+        });
+        return false;
+    }
+
+    if(!AD){
+        zuiTotast("请输入氨氮", "2", function(){
+            _J_AD.focus();
+        });
+        return false;
+    }
+
+    if(!arr.length){
+        zuiTotast("请拍照", "2");
+        return false;
+    }
+
+    data = "COD="+COD+"&AD="+AD+"&date="+date+"&img="+arr.join(",");
+    console.log("注意base64过长")
+    console.log(data)
+
+    return false;
+    if(clickFlag)
+        return false;
+    clickFlag = 1;
+    $.PostJson(srvMap.get("saveImg"), "filename="+name+"&base64Str="+path, function(state, json){
+        if(state == 'success'){
+            if(json){
+                
+            }
+        }
+        unblockLoading();
+    })
+}
+</script>
+</body>
+</html>

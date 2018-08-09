@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>首页</title>
+<link rel="stylesheet" href="js/jquery-weui/lib/weui.min.css">
+<link rel="stylesheet" href="js/jquery-weui/css/jquery-weui.min.css">
+<link rel="stylesheet" href="css/font-awesome.css?v=4.4.0">
+<link rel="stylesheet" href="css/wxzui_common.css">
+<style>
+body {
+    background: #fff;
+}
+.zheader {
+    padding: 1rem 0 0 0;
+    background: -webkit-gradient(linear,0% 0%, 100% 100%, from(#003851), to(#020054));
+    color: #fff;
+}
+.weui-grid__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 auto;
+}
+.zheader .zheader_tit {
+    text-align: center;
+    font-size: .85rem;
+    color: #fff;
+    font-weight: 400;
+    margin: 0 15%;
+}
+.J_content .weui-grids .bg {
+    box-shadow:5px 5px 5px rgba(0,0,0,.4);
+}
+.J_top_bg {
+    text-align: center;
+    width: 100%;
+    height: 9.4rem;
+    overflow: hidden;
+    margin-top: -1px;
+}
+.J_top_bg img {
+    width: 100%;
+    height: 100%;
+}
+.weui-grid__icon+.weui-grid__label {
+    margin-top: 0.35rem;
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.weui-grids, .swiper-pagination {
+    width: 100%;
+}
+.swiper-pagination {
+    margin-top: 10px;
+}
+.swiper-pagination.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 5px;
+}
+.J_reserved {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 0.5rem;
+    color: #afafaf;
+}
+.J_yzc_list {
+    min-height: 300px;
+}
+.weui-popup__modal .modal-content {
+    padding-top: 1.8rem;
+}
+.toolbar .toolbar-inner {
+    height: 1.8rem;
+}
+.toolbar .title {
+    line-height: 1.8rem;
+    font-size: .8rem;
+}
+.toolbar .picker-button {
+    height: 1.8rem;
+    line-height: 1.8rem;
+    font-size: .8rem;
+}
+.J_yzc_list {
+    overflow: auto;
+}
+.toolbar {
+    z-index: 99;
+}
+</style>
+</head>
+<body class="zui">
+
+<header class="zheader">
+    <h1 class="zheader_tit">环保信息平台</h1>
+</header>
+
+<div class="J_top_bg">
+    <img src="css/img/ht.png" title="哎呦喂囡囡耶 | 北京 | UI设计师">
+</div>
+
+<div class="J_content">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="weui-grids">
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="store.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/1.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            库存查询
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="shouquan.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/2.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            授权管理
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="yjtf.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/3.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            药剂投放
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="shxt.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/4.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            生化系统
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="pnhs.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/5.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            排泥耗时
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="xhhs.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/6.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            循环耗时
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="weui-grids">
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="ssgl.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/7.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            6s管理
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="shzj.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/8.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            生化总结
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="sbby.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/9.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            设备保养
+                        </p>
+                    </a>
+                    <a href="javascript:;" class="weui-grid J_menuLink" data-src="tzgl.html">
+                        <div class="weui-grid__icon">
+                            <img src="css/img/10.png" class="bg">
+                        </div>
+                        <p class="weui-grid__label">
+                            台账管理
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="swiper-pagination"></div>
+</div>
+
+<div class="J_reserved">
+    <p>Copyright © XYG</p>
+</div>
+
+<div id="J_yzc_list" class="weui-popup__container popup-bottom">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal">
+        <div class="toolbar">
+            <div class="toolbar-inner">
+                <a href="javascript:;" class="picker-button close-popup">关闭</a>
+                <h1 class="title">切换养殖场</h1>
+            </div>
+        </div>
+        <div class="modal-content">
+            <div class="weui-cell weui-check__label">
+                <form action="#" class="J_search">
+                    <input type="search" placeholder="请输入站点" class="J_input">
+                </form>
+            </div>
+            <div class="weui-cells weui-cells_radio J_yzc_list">
+                <label class="weui-cell weui-check__label" for="x11_0" data-path="Va4AAAABDNXM567U">
+                    <div class="weui-cell__bd">
+                        <p>红兴猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_0" checked="checked">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_1" data-path="Va4AAAAAGCPM567U">
+                    <div class="weui-cell__bd">
+                        <p>养殖进贤猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_1">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_2" data-path="Va4AAAABnGzM567U">
+                    <div class="weui-cell__bd">
+                        <p>鄂州原种猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_2">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_3" data-path="Va4AAAAGSXrM567U">
+                    <div class="weui-cell__bd">
+                        <p>封丘猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_3">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_4" data-path="Va4AAAABD+TM567U">
+                    <div class="weui-cell__bd">
+                        <p>柏树猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_4">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_5" data-path="Va4AAAACE+jM567U">
+                    <div class="weui-cell__bd">
+                        <p>茶场猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_5">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_6" data-path="Va4AAAABD5zM567U">
+                    <div class="weui-cell__bd">
+                        <p>古陂猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_6">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_7" data-path="Va4AAAAAGHrM567U">
+                    <div class="weui-cell__bd">
+                        <p>金冠猪场</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_7">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_7" data-path="Va4AAAAAGHrM567U">
+                    <div class="weui-cell__bd">
+                        <p>金冠猪场2</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_7">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x11_7" data-path="Va4AAAAAGHrM567U">
+                    <div class="weui-cell__bd">
+                        <p>金冠猪场3</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="radio1" id="x11_7">
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<textarea class="fn-hide" id="T_yzc_list">
+{{#each this}}
+<label class="weui-cell weui-check__label" for="x11_{{@index}}" data-path="{{path}}">
+    <div class="weui-cell__bd">
+        <p>{{tit}}</p>
+    </div>
+    <div class="weui-cell__ft">
+        {{#if_eq @index compare='0'}}
+        <input type="radio" class="weui-check" name="radio1" id="x11_{{@index}}" checked="checked">
+        {{else}}
+        <input type="radio" class="weui-check" name="radio1" id="x11_{{@index}}">
+        {{/if_eq}}
+        <span class="weui-icon-checked"></span>
+    </div>
+</label>
+{{/each}}
+</textarea>
+
+<script src="js/jquery-weui/lib/jquery-2.1.4.js"></script>
+<script src="js/jquery-weui/js/jquery-weui.min.js"></script>
+<script src="js/handlebars.js"></script>
+<script src="js/swiper.js"></script>
+<script src="js/wxzui_common.js"></script>
+<script src="js/vconsole.min.js"></script>
+<script>
+
+srvMap.add("json", "tableData.json", "");
+
+var clickFlag = 0,
+    curYzcName = '',//当前养殖场名称
+    curYzcId = '';//当前养殖场id
+
+var zinter = null;
+
+$(function(){
+
+    var _w = $(window).width(),
+        _J_top_bg = $(".J_top_bg"),
+        _h = _w/375*205;
+    _J_top_bg.css({"height": _h.toFixed(2)});
+
+    new Swiper('.swiper-container', {
+        loop : true,
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+    });
+
+    $(".J_menuLink").on("click", function(){
+        var _this = $(this),
+            _src = _this.data("src");
+        var appid = '74787979',
+            ticket = 'aaaaaaa';
+
+        window.location.href = _src+"#/J_router_main?appid="+appid+"&ticket="+ticket;
+    })
+
+    /*var _zlist = $(".J_yzc_list"),
+        _popwrap = $(".weui-popup__modal"),
+        _h2 = $(window).height()* 0.4;
+    _zlist.css({"height": _h2.toFixed(2)});
+    
+    $(".J_input").on("focus", function(){
+        if(zinter)
+            clearTimeout(zinter);
+        _popwrap.css({"height": '230px'});
+    }).on("blur", function(){
+        zinter = setTimeout(function(){
+            _popwrap.css({"height": "auto"});
+        }, 30)
+    })
+
+
+    $(".close-popup").on("click", function(){
+        if(zinter)
+            clearTimeout(zinter);
+        $.closePopup();
+    })*/
+    $(".zheader_tit").on("click", function(){
+        $("#J_yzc_list").popup();
+    })
+    var _popwrap = $(".weui-popup__modal"),
+        _zlist = $(".J_yzc_list"),
+        _h2 = $(window).height()* 0.75,
+        _h3 = _h2* 0.8;
+    _popwrap.css({"height": _h2.toFixed(2)});
+    _zlist.css({"height": _h3.toFixed(2)});
+    $(window).on("resize", function(){
+        _h2 = $(window).height()* 0.75;
+        _popwrap.css({"height": _h2.toFixed(2)});
+    })
+})
+</script>
+</body>
+</html>

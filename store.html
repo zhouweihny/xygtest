@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>库存查询</title>
+<link rel="stylesheet" href="js/jquery-weui/lib/weui.min.css">
+<link rel="stylesheet" href="js/jquery-weui/css/jquery-weui.min.css">
+<link rel="stylesheet" href="css/font-awesome.css?v=4.4.0">
+<link rel="stylesheet" href="js/mobiscroll/mobiscroll.zcore.css">
+<link rel="stylesheet" href="js/iscroll/4.2.5/pullToRefresh.css">
+<link rel="stylesheet" href="css/wxzui_common.css?v=1">
+<style>
+.weui-label {
+    width: 3.5rem;
+    color: #555;
+}
+.weui-cell__bd .detaildes {
+    font-size: .65rem;
+}
+.weui-cell_access .weui-cell__ft:after {
+    width: 0;
+    height: 0;
+    border: 0;
+}
+.zcell.weui-cell {
+    display: block;
+}
+.zcell.weui-cell:before {
+    border: 0;
+    height: 0;
+}
+.zcard {
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+    color: rgba(0,0,0,.87);
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+.zcard .z_h {
+    border-bottom: 1px solid #ddd;
+    height: 35px;
+    line-height: 35px;
+}
+.zcard .z_b {
+    font-size: .55rem;
+    margin-top: 10px;
+}
+.zcard .z_b .weui-flex__item {
+    margin-bottom: 5px;
+}
+.zcard .z_b label {
+    width: 30%;
+    float: left;
+}
+.zcard .z_b .des {
+    width: 60%;
+    float: left;
+    word-break: break-all;
+}
+.zcard .z_f {
+    font-size: .55rem;
+    margin-top: 5px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+</style>
+</head>
+<body class="zui nofooter">
+
+<section class="fn-hide J_router_main">
+    <header class="J_header">
+        <a class="J_header_back" href="index.html"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">库存查询</h1>
+        <a class="J_header_right_icon" href="#/J_router_search">筛选</a>
+    </header>
+
+    <div class="J_content" id="wrapper">
+        <div class="weui-cells" id="J_cards">
+            
+        </div>
+    </div>
+</section>
+
+<section class="fn-hide J_router_search">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">筛选</h1>
+    </header>
+
+    <div class="J_content">
+        
+    </div>
+
+    <div class="J_btnwrap">
+        <a href="javascript:;" class="zbtn" id="J_subData">查询</a>
+    </div>
+</section>
+
+<section class="fn-hide J_router_detail">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">详情</h1>
+    </header>
+
+    <div class="J_content">
+        
+    </div>
+</section>
+
+<textarea class="fn-hide" id="T_cards">
+{{#each this}}
+<a class="weui-cell weui-cell_access zcell" href="#/J_router_detail?id=1" data-json="{{retJson2Str this}}">
+    <div class="weui-cell__bd weui-cell_primary">
+        <div class="zcard">
+            <div class="z_h">
+                {{goodsname}}
+            </div>
+            <div class="z_b">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <label>规格：</label><span class="des">{{fmodel}}</span>
+                    </div>
+                    <div class="weui-flex__item">
+                        <label>批号：</label><span class="des">{{fbatchnumber}}</span>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <label>厂商：</label><span class="des">{{storagename}}</span>
+                    </div>
+                    <div class="weui-flex__item">
+                        <label>库存：</label><span class="des qty">{{qty}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="z_f">
+                批次：<span class="des">{{fbatchno}}</span>
+            </div>
+        </div>
+    </div>
+</a>
+{{/each}}
+</textarea>
+
+<textarea class="fn-hide" id="T_detail">
+<div class="weui-cells">
+    <!-- <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">COD(mg/l)：</label>
+            <p class="tips">定额：200</p>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{COD}}</p>
+        </div>
+    </div> -->
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">编码：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{goodsnumber}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">名称：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{goodsname}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">规格：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{fmodel}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">产地：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{fprodplace}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">单位：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{funit}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">数量：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{qty}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">批次：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{fbatchno}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">批号：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{fbatchnumber}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">组织：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{storagename}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">失效日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{fdisdate}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">供应商：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{suppliername}}</p>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">单价：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <p class="detaildes">{{purprice}}</p>
+        </div>
+    </div>
+</div>
+</textarea>
+
+<textarea class="fn-hide" id="T_search">
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">开始日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input value="" class="weui-input J_date J_sdate" readonly="readonly" name="appDate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">结束日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input value="" class="weui-input J_date J_edate" readonly="readonly" name="appDate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">品名：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <input class="weui-input J_name" type="text" placeholder="请输入品名">
+            </div>
+        </div>
+    </div>
+</div>
+</textarea>
+
+<script src="js/jquery-weui/lib/jquery-2.1.4.js"></script>
+<script src="js/jquery-weui/js/jquery-weui.min.js"></script>
+<script src="js/handlebars.js"></script>
+<script src="js/swiper.js"></script>
+<script src="js/mobiscroll/mobiscroll.zcore.js"></script>
+<script src="js/lrz.all.bundle.js"></script>
+<script src="js/director.min.js"></script>
+<script src="js/iscroll/4.2.5/iscroll.js"></script>
+<script src="js/iscroll/4.2.5/pullToRefresh.js"></script>
+<script src="js/wxzui_common.js"></script>
+<script>
+
+srvMap.add("json", "tableData3.json", "");
+
+var endFlag = 0,
+    refreshFlag = 1,
+    page = 1,
+    rows = 10,
+    pagedata = {
+        url: srvMap.get("json"),
+        data: '&page='+page+'&rows='+rows,
+        callback: initzBtns
+    },
+    clickFlag = 0,
+    pageHeight = $(window).height() - 65,
+    zimgObj = null,
+    zrouter = null,
+    cdate = '',
+    curSection = null;
+
+$(function(){
+
+    var routerObj = {
+        '/J_router_detail': {
+            on: function(){
+                if(zimgObj)
+                    zimgObj.close();
+                var id = $.getUrlVar('id');
+                curSection = $(".J_router_detail .J_content");
+                setTimeout(function(){
+                    showDetail(id);
+                }, 30)
+            },
+            /*after: function(){
+                $(".J_router_detail .J_content").html('');
+                removeResDes();
+            },*/
+            after: function(){
+                curSection.html('');
+                curSection = $(".J_router_main .J_content");
+            }
+        },
+        '/J_router_search': {
+            on: function(){
+                curSection = $(".J_router_search .J_content");
+                setTimeout(function(){
+                    showSearch();
+                }, 30)
+            },
+            after: function(){
+                curSection.html('');
+                curSection = $(".J_router_main .J_content");
+            }
+        },
+        '/J_router_main': {
+            once: function(){
+                setTimeout(function(){
+                    initPage();
+                }, 30)
+            },
+            on: function(){
+                if(zimgObj)
+                    zimgObj.close();
+                curSection = $(".J_router_main .J_content");
+            }
+        }
+    }
+    initZrouter(routerObj, function(router){
+        zrouter = router;
+    });
+})
+
+function initPage(){
+    $("#wrapper").css({"height": pageHeight});
+
+    refresher.init({
+        id: "wrapper",
+        li: "weui-cells",
+        pullDownAction: Refresh,
+        pullUpAction: Load
+    });
+
+    getAjaxDataIscrollCommon(pagedata);
+}
+
+function Refresh() {
+    page = 1;
+    endFlag = 0;
+    refreshFlag = 1;
+    $(".pullUp").css({"display": "block"});
+    $(".pullUp .pullUpLabel").html("上拉加载更多...");
+    getAjaxDataIscrollCommon(pagedata);
+}
+
+function Load() {
+    if(endFlag){
+        wrapper.refresh();
+        $(".pullUp .pullUpLabel").html("没有更多数据了...");
+        return false;
+    }
+    page++;
+    getAjaxDataIscrollCommon(pagedata);
+}
+
+function initzBtns(){
+    console.log("initzBtns")
+}
+
+function showDetail(id){
+    if(!id){
+        showResDes(pageHeight, curSection);
+        return false;
+    }
+    createLoading();
+    $.PostJson(srvMap.get("json"), "id="+id, function(state, json){
+        if(state == 'success'){
+            if(json && json.code == '0000'){
+                curSection.temp($("#T_detail").val(), json.data.rows[0]);
+                $(".J_router_detail .J_header-title").text(json.data.rows[0].name);
+
+                initImgShow();
+            }else{
+                showResDes(pageHeight, curSection);
+            }
+        }
+        unblockLoading();
+    })
+}
+
+function showSearch(){
+    curSection.html($("#T_search").val());
+
+    // 获取当日与当月1号
+    var curDate = new Date(),
+        cdate = getCurDate(curDate),
+        _sdate = $(".J_sdate"),
+        _edate = $(".J_edate"),
+        _m = ((curDate.getMonth()+1)<10) ? ("0"+(curDate.getMonth()+1)) : (curDate.getMonth()+1),
+        firstdate = curDate.getFullYear() + "-"+ _m + "-01";
+    _sdate.datetimePicker({
+        value: firstdate,
+        times: function(){
+            return;
+        },
+        min: '2001-01-01',
+        max: function(){
+            return _edate.val();
+        },
+        onChange: function (picker, values, displayValues) {
+            // console.log(values);
+        },
+        parse: function (str) {
+            // 自定义解析函数
+            var t = str.split(this.datetimeSplit);
+            return t[0].split(/\D/).concat("");
+        }
+    });
+    _edate.datetimePicker({
+        value: cdate,
+        times: function(){
+            return;
+        },
+        min: function(){
+            return _sdate.val();
+        },
+        max: cdate,
+        onChange: function (picker, values, displayValues) {
+            // console.log(values);
+        },
+        parse: function (str) {
+            // 自定义解析函数
+            var t = str.split(this.datetimeSplit);
+            return t[0].split(/\D/).concat("");
+        }
+    });
+
+
+    $("#J_subData").on("click", function(){
+        subData();
+    })
+}
+
+function imgUploadF(obj){
+    var file = obj.files[0];
+    //判断类型是不是图片
+    if(!(/image\/\w+/.test(file.type))){
+        zuiTotast("请确保文件为图像类型");
+        return false;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    createLoading("正在上传...");
+    reader.onload = function(e){
+        //todo 以base64的方式上传到服务器
+        lrz(file, { quality:0.7}).then(function (rst) {
+
+            var _str = '<li><img src="'+rst.base64+'" class="J_pswpImg"><a href="javascript:;" class="J_delImg"><i></i></a></li>';
+            $("#J_imgList").append(_str);
+
+            initImgShow();
+
+            $("#msg-image").replaceWith('<input type="file" id="msg-image" class="_file" accept="image/*">');
+            $("#msg-image").on("change", function(){
+                imgUploadF(this);
+            });
+
+        })
+        .catch(function (err) {
+            // 处理失败会执行
+            console.log(err)
+            zuiTotast("上传失败", '3');     
+        })
+        .always(function () {
+            // 不管是成功失败，都会执行
+            unblockLoading();
+        }); 
+    }
+}
+
+function initImgShow(){
+    var _pswpImg = $(".J_pswpImg").not(".fn-hide");
+    _pswpImg.off("click").on("click", function(){
+        var _index = _pswpImg.index($(this)),
+            zimgArr = [];
+        _pswpImg.each(function(){
+            var _this = $(this),
+                attr = {};
+            attr.image = _this.attr("src"),
+            attr.caption = _this.attr("title");
+            zimgArr.push(attr);
+        })
+        // zrouter.setRoute("J_router_imgshow?index="+_index);
+
+        zimgObj = $.photoBrowser({
+            items: zimgArr,
+            initIndex: _index,
+            onClose: function(){
+                
+            }
+        });
+        zimgObj.open();
+    })
+
+    $(".J_delImg").off("click").on("click", function(){
+        delImg($(this));
+    })
+}
+
+function delImg(obj){
+    zuiConfirm("确定删除？", function(){
+        var _li = obj.parent();
+        _li.remove();
+    })
+}
+
+function subData(){
+    var data = '',
+        _J_COD = $(".J_COD"),
+        _J_AD = $(".J_AD"),
+        COD = _J_COD.val(),
+        AD = _J_AD.val(),
+        date = $(".J_date").val();
+
+    var arr = [],
+        _J_pswpImg = $(".J_pswpImg");
+    _J_pswpImg.each(function(){
+        var _src = $(this).attr("src");
+        arr.push(_src);
+    })
+
+    if(!COD){
+        zuiTotast("请输入COD", "2", function(){
+            _J_COD.focus();
+        });
+        return false;
+    }
+
+    if(!AD){
+        zuiTotast("请输入氨氮", "2", function(){
+            _J_AD.focus();
+        });
+        return false;
+    }
+
+    if(!arr.length){
+        zuiTotast("请拍照", "2");
+        return false;
+    }
+
+    data = "COD="+COD+"&AD="+AD+"&date="+date+"&img="+arr.join(",");
+    console.log("注意base64过长")
+    console.log(data)
+
+    return false;
+    if(clickFlag)
+        return false;
+    clickFlag = 1;
+    $.PostJson(srvMap.get("saveImg"), "filename="+name+"&base64Str="+path, function(state, json){
+        if(state == 'success'){
+            if(json){
+                
+            }
+        }
+        unblockLoading();
+    })
+}
+</script>
+</body>
+</html>
