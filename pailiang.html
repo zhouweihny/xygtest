@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>设备当日排量</title>
+<link rel="stylesheet" href="js/jquery-weui/lib/weui.min.css">
+<link rel="stylesheet" href="js/jquery-weui/css/jquery-weui.min.css">
+<link rel="stylesheet" href="css/font-awesome.css?v=4.4.0">
+<link rel="stylesheet" href="js/mobiscroll/mobiscroll.zcore.css">
+<link rel="stylesheet" href="js/iscroll/4.2.5/pullToRefresh.css">
+<link rel="stylesheet" href="css/wxzui_common.css">
+<style>
+#J_cards .weui-cell_access .weui-cell__ft:after {
+    display: none;
+    height: 0;
+    width: 0;
+}
+#J_cards .weui-cell_access .weui-cell__ft {
+    padding-right: 0;
+}
+.J_router_main .J_dateWrapS {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+}
+.J_router_main .weui-cells {
+    margin-top: 0;
+}
+</style>
+</head>
+<body class="zui nofooter">
+
+<section class="fn-hide J_router_main">
+    <header class="J_header">
+        <a class="J_header_back" href="index.html"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">设备当日排量</h1>
+        <a class="J_header_right_icon" href="#/J_router_search">筛选</a>
+    </header>
+
+    <div class="J_dateWrapS">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        <span class="J_main_date"></span>
+    </div>
+    <div class="J_content" id="wrapper">
+        <div class="weui-cells ctype" id="J_cards">
+            
+        </div>
+    </div>
+</section>
+
+<section class="fn-hide J_router_search">
+    <header class="J_header">
+        <a class="J_header_back" href="javascript:;"><i class="fa fa-angle-left"></i></a>
+        <h1 class="J_header-title">筛选</h1>
+    </header>
+
+    <div class="J_content">
+        
+    </div>
+</section>
+
+<textarea class="fn-hide" id="T_cards">
+{{#each this}}
+<a class="weui-cell weui-cell_access" href="javascript:;">
+    <div class="weui-cell__bd">
+        <p>{{dname}}</p>
+    </div>
+    <div class="weui-cell__ft">{{dcount}}</div>
+</a>
+{{/each}}
+</textarea>
+
+<textarea class="fn-hide" id="T_search">
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">选择日期：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <input value="" class="weui-input J_date J_sdate" readonly="readonly" name="appDate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">设备名：</label>
+        </div>
+        <div class="weui-cell__bd">
+            <div class="J_dateWrap">
+                <input class="weui-input J_name" type="text" placeholder="请输入设备名">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="J_btnwrap">
+    <a href="javascript:;" class="zbtn" id="J_subData">查询</a>
+</div>
+</textarea>
+
+<script src="js/jquery-weui/lib/jquery-2.1.4.js"></script>
+<script src="js/jquery-weui/js/jquery-weui.min.js"></script>
+<script src="js/handlebars.js"></script>
+<script src="js/swiper.js"></script>
+<script src="js/mobiscroll/mobiscroll.zcore.js"></script>
+<script src="js/lrz.all.bundle.js"></script>
+<script src="js/director.min.js"></script>
+<script src="js/iscroll/4.2.5/iscroll.js"></script>
+<script src="js/iscroll/4.2.5/pullToRefresh.js"></script>
+<script src="js/wxzui_common.js"></script>
+<script>
+
+srvMap.add("json", "tableData5.json", "");
+
+var endFlag = 0,
+    refreshFlag = 1,
+    page = 1,
+    rows = 15,
+    pagedata = {
+        url: srvMap.get("json"),
+        data: '&page='+page+'&rows='+rows,
+        callback: initzBtns
+    },
+    clickFlag = 0,
+    pageHeight = $(window).height() - $(".J_header").height() - 20,
+    zrouter = null,
+    cdate = '',
+    curSection = null,
+    curUserId = '',
+    searchParam = '';
+
+$(function(){
+
+    var routerObj = {
+        '/J_router_detail': {
+            on: function(){
+                curUserId = $.getUrlVar('id') || '';
+                curSection = $(".J_router_detail .J_content");
+                setTimeout(function(){
+                    showDetail();
+                }, 30)
+            },
+            after: function(){
+                curSection.html('');
+                curSection = $(".J_router_main .J_content");
+            }
+        },
+        '/J_router_search': {
+            on: function(){
+                curSection = $(".J_router_search .J_content");
+            },
+            once: function(){
+                setTimeout(function(){
+                    showSearch();
+                }, 30)
+            },
+            after: function(){
+                curSection = $(".J_router_main .J_content");
+            }
+        },
+        '/J_router_main': {
+            once: function(){
+                setTimeout(function(){
+                    initPage();
+                }, 30)
+            },
+            on: function(){
+                curSection = $(".J_router_main .J_content .weui-cells");
+            }
+        }
+    }
+    initZrouter(routerObj, function(router){
+        zrouter = router;
+    });
+})
+
+function initPage(){
+    $("#wrapper").css({"height": pageHeight});
+
+    cdate = getCurDate(new Date());
+    searchParam = "&name="+name+"&date="+cdate;
+    $(".J_main_date").text(cdate);
+
+    refresher.init({
+        id: "wrapper",
+        li: "weui-cells",
+        pullDownAction: Refresh,
+        pullUpAction: Load
+    });
+
+    getAjaxDataIscroll();
+}
+
+function Refresh() {
+    page = 1;
+    endFlag = 0;
+    refreshFlag = 1;
+    $(".pullUp").css({"display": "block"});
+    $(".pullUp .pullUpLabel").html("上拉加载更多...");
+    getAjaxDataIscroll();
+}
+
+function Load() {
+    if(endFlag){
+        wrapper.refresh();
+        $(".pullUp .pullUpLabel").html("没有更多数据了...");
+        return false;
+    }
+    page++;
+    getAjaxDataIscroll();
+}
+
+function initzBtns(){
+    
+}
+
+function getAjaxDataIscroll(){
+    createLoading();
+    removeResDes();
+    var _data = searchParam+'&page='+page+'&rows='+rows;
+    $.PostJson(srvMap.get("json"), _data, function(state, json){
+        if(state == 'success'){
+            if(json && json.code == '0000'){
+                if(refreshFlag){
+                    curSection.html("");
+                    wrapper.refresh();
+                    curSection.temp($("#T_cards").val(), json.data.rows);
+                }else{
+                    curSection.tempAppend($("#T_cards").val(), json.data.rows);
+                }
+
+                refreshFlag = 0;
+                if(json.data.rows.length){
+                    if(curSection.find(".zcell").length >= json.data.total){
+                        endFlag = 1;
+                        setTimeout(function(){
+                            if($("#wrapper .scroller").height() > pageHeight)
+                                $(".pullUp .pullUpLabel").html("没有更多数据了...").show();
+                            else
+                                $(".pullUp .pullUpLabel").html("没有更多数据了...").hide();
+                        }, 100);
+                    }else{
+                        $(".pullUp .pullUpLabel").html("上拉加载更多...").show();
+                    }
+                }else{
+                    endFlag = 1;
+                    if(curSection.find(".zcell").length){
+                        $(".pullUp .pullUpLabel").html("没有更多数据了...").show();
+                        wrapper.refresh();
+                    }else{
+                        $(".pullUp .pullUpLabel").html("没有更多数据了...").hide();
+                        showResDes(pageHeight, curSection);
+                    }
+                }
+
+            }else{
+                zuiAlert(json.message||"暂无设备流量监控列表");
+                $(".pullUp .pullUpLabel").hide();
+                showResDes(pageHeight, curSection);
+            }
+        }
+        wrapper.refresh();
+        unblockLoading();
+    })
+}
+
+function showSearch(){
+    curSection.html($("#T_search").val());
+
+    // 获取当日与当月1号
+    var curDate = new Date(),
+        _sdate = $(".J_sdate"),
+        _sdateMob = null;
+
+    var opt1 = {
+        dateFormat: "yy-mm-dd",
+        maxDate: curDate
+    };
+    if(_sdateMob){
+        _sdateMob.destroy();
+        _sdateMob = null;
+    }
+    _sdate.val(getCurDate(curDate)).mobiscroll().date(opt1);
+    _sdateMob = _sdate.mobiscroll('getInst');
+
+    setTimeout(function(){
+        $("#J_subData").off("click").on("click", function(){
+            subData();
+        })
+    }, 30)
+}
+
+function subData(){
+    var name = curSection.find(".J_name").val();
+    name = name.replace(/\%/g, "%25").replace(/\+/g, "%2B").replace(/\&/g, "%26");
+    cdate = curSection.find(".J_sdate").val();
+
+    $(".J_main_date").text(cdate);
+
+    page = 1;
+    endFlag = 0;
+    refreshFlag = 1;
+    $(".pullUp").css({"display": "block"});
+    $(".pullUp .pullUpLabel").html("上拉加载更多...");
+    searchParam = "&name="+name+"&date="+cdate;
+    window.history.back();
+    setTimeout(function(){
+        $("#J_cards").html("");
+        wrapper.scrollTo(0, 0, 200);
+        getAjaxDataIscroll();
+    }, 200)
+    return false;
+}
+
+</script>
+</body>
+</html>
